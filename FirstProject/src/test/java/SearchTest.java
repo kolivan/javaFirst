@@ -2,37 +2,42 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.Test;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.AfterMethod;
+import org.testng.annotations.*;
 import org.testng.Assert;
+import pages.HomePage;
+import org.openqa.selenium.support.PageFactory;
 
 public class SearchTest {
 
-    public WebDriver driver;
+    // analyticsLoginPage mylogin = PageFactory.initElements(driver, analyticsLoginPage.class);
+    //analyticsLandingPage landingpage = mylogin.login("username", "password");
 
-    @Test
-    public void main() {
-        driver.findElement(By.id("ember699")).click();
-
-    }
+    public  WebDriver driver;
+     HomePage location =new HomePage(driver);
 
     @BeforeMethod
     public void beforeMethod() {
 
         driver = new FirefoxDriver();
+        PageFactory.initElements(this.driver, this);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get("https://hs.bigdropinc.net/");
-        String Actualtext = driver.findElement(By.xpath("//*[@id=\"ember575\"]/div[4]/nav/div/div/p")).getText();
-        Assert.assertEquals(Actualtext, "Tuesday, 28 January 2014");
     }
+
+    @Test
+    public void main() {
+
+        location.ClickLocation();
+        String Actualtext = driver.findElement(By.xpath("//div[@class='container']/h1")).getText();///div[@class='container']/h1
+        Assert.assertEquals(Actualtext, "Locations");
+    }
+
+
 
     @AfterMethod
     public void afterMethod() {
 
-
         driver.quit();
-
     }
 
 }
