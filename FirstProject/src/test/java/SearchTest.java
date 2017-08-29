@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 import org.testng.Assert;
+import pages.AccountPage;
 import pages.HomePage;
 import pages.LocationPage;
 
@@ -26,16 +27,18 @@ public class SearchTest extends BaseTest {
         homepage = new HomePage(driver);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         open(driver, url);
-    }
-
-    @Test
-    public void logInTest() {
         homepage.signIn.click();
         homepage.filledField(homepage.email, user.name);
         homepage.filledField(homepage.pass, user.pass);
         homepage.submitBtn.click();
         WebDriverWait wait = new WebDriverWait(driver, 50);
         wait.until(ExpectedConditions.visibilityOfElementLocated((By.xpath("//a[@class='logout']"))));
+    }
+
+    @Test
+    public void logInTest() {
+        AccountPage apage = new AccountPage(driver);
+        Assert.assertEquals(apage.editBtn.getText(), "Edit");
         //Assert.assertEquals(homepage.signIn.getText(), "Account");
     }
 
