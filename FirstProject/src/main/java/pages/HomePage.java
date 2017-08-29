@@ -1,8 +1,10 @@
 package pages;
 
+import helpers.User;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
 /**
@@ -11,21 +13,29 @@ import org.openqa.selenium.support.PageFactory;
 public class HomePage {
     public WebDriver driver;
 
-    public WebElement getLocation() {
-        return location;
-    }
-
-    @FindBy(css = "a[id=ember699]")
+    @FindBy(how=How.XPATH, using = "//li[5]/a")
     public WebElement  location;
+
+    @FindBy(how = How.XPATH, using = "//a[@href='/account']")//
+    public WebElement signIn;
+
+    @FindBy(how = How.XPATH, using = "//input[@name='identification']")
+    public WebElement email;
+
+    @FindBy(how = How.XPATH,using = "//input[@name='password']")
+    public WebElement pass;
+
+    @FindBy(how = How.XPATH, using = "//input[@class = 'btn-blue submit']")
+    public WebElement submitBtn;
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-
-    public void ClickLocation(){
-        location.click();
+    public void filledField(WebElement element, String name){
+        element.sendKeys(name);
     }
+
 
 }

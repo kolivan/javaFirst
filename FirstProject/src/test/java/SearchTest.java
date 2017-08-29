@@ -1,43 +1,51 @@
 import java.util.concurrent.TimeUnit;
+
+import helpers.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 import org.testng.Assert;
 import pages.HomePage;
-import org.openqa.selenium.support.PageFactory;
+import pages.LocationPage;
 
-public class SearchTest {
+public class SearchTest extends BaseTest {
 
-    // analyticsLoginPage mylogin = PageFactory.initElements(driver, analyticsLoginPage.class);
-    //analyticsLandingPage landingpage = mylogin.login("username", "password");
+    public WebDriver driver;
 
-    public  WebDriver driver;
-     HomePage location =new HomePage(driver);
+    HomePage homepage;
+    LocationPage locationpage;
+    public String url = "https://hs.bigdropinc.net/";
+    User user = new User("anna.kolivanova@bigdropinc.com", "Tester123");
 
     @BeforeMethod
     public void beforeMethod() {
-
         driver = new FirefoxDriver();
-        PageFactory.initElements(this.driver, this);
+        homepage = new HomePage(driver);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get("https://hs.bigdropinc.net/");
+        open(driver, url);
     }
 
     @Test
-    public void main() {
-
-        location.ClickLocation();
-        String Actualtext = driver.findElement(By.xpath("//div[@class='container']/h1")).getText();///div[@class='container']/h1
-        Assert.assertEquals(Actualtext, "Locations");
+    public void logInTest() {
+        homepage.signIn.click();
+        homepage.filledField(homepage.email, user.name);
+        homepage.filledField(homepage.pass, user.pass);
+        homepage.submitBtn.click();
+        WebDriverWait wait = new WebDriverWait(driver, 50);
+        wait.until(ExpectedConditions.visibilityOfElementLocated((By.xpath("//a[@class='logout']"))));
+        //Assert.assertEquals(homepage.signIn.getText(), "Account");
     }
 
-
+    @Test
+    public void editTest(){
+        Assert.assertEquals(homepage.signIn.getText(), "Account");
+    }
 
     @AfterMethod
     public void afterMethod() {
-
         driver.quit();
     }
-
 }
