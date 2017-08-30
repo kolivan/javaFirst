@@ -18,7 +18,7 @@ public class SearchTest extends BaseTest {
     public WebDriver driver;
 
     HomePage homepage;
-    LocationPage locationpage;
+    AccountPage accountPage;
     public String url = "https://hs.bigdropinc.net/";
     User user = new User("anna.kolivanova@bigdropinc.com", "Tester123");
 
@@ -26,28 +26,23 @@ public class SearchTest extends BaseTest {
     public void beforeMethod() {
         driver = new FirefoxDriver();
         homepage = new HomePage(driver);
+        accountPage = new AccountPage(driver);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         open(driver, url);
         homepage.clickSignInBtn();
         homepage.filledEmail(user.name);
         homepage.filledPwd(user.pass);
         homepage.clickSubmit();
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOfElementLocated((By.xpath("//a[@class='logout']"))));
+        //asseertThat(accountPage.logout);
     }
 
     @Test
     public void logInTest() {
-        AccountPage apage = new AccountPage(driver);
-        /*WebDriverWait wait = new WebDriverWait(driver, 10);
-        WebElement a = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("My Appointments")));*/
-        Assert.assertEquals(apage.myAppointments.getText(), "MY APPOINTMENTS");
+
+      // asseertThat(accountPage.myAppointments);
     }
 
-   /* @Test
-    public void editTest(){
-        Assert.assertEquals(homepage.signIn.getText(), "Account");
-    }*/
+
 
     @AfterMethod
     public void afterMethod() {

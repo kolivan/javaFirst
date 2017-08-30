@@ -1,6 +1,7 @@
 import helpers.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -22,6 +23,7 @@ public class LoginTest extends BaseTest {
     public WebDriver driver;
 
     HomePage homepage;
+    AccountPage accountPage;
     public String url = "https://hs.bigdropinc.net/";
     User existingUser = new User("anna.kolivanova@bigdropinc.com", "Tester123");
     User existingUserWithInvalidPwd = new User("anna.kolivanova@bigdropinc.com", "Tester1234");
@@ -38,16 +40,16 @@ public class LoginTest extends BaseTest {
 
     }
 
+
+
     @Test
     public void logInExistingUserTest() {
         homepage.clickSignInBtn();
         homepage.filledEmail(existingUser.name);
         homepage.filledPwd(existingUser.pass);
         homepage.clickSubmit();
-        /*AccountPage apage = new AccountPage(driver);
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        WebElement a = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("My Appointments")));
-        Assert.assertEquals(apage.myAppointments.getText(), "MY APPOINTMENTS");/*/
+        accountPage = new AccountPage(driver);
+        asseertThat(driver,accountPage.logout);
     }
     @Test
     public void logInNotExistingUserTest(){

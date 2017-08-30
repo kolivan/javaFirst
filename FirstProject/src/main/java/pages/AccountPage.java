@@ -36,4 +36,7 @@ public class AccountPage {
 
     @FindBy(xpath = "//div[@class='note']")
     public WebElement note;
+
+    @FindBy(xpath = "//a[@class='logout']")
+    public WebElement logout;
 }
