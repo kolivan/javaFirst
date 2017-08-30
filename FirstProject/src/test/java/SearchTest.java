@@ -3,6 +3,7 @@ import java.util.concurrent.TimeUnit;
 import helpers.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -27,25 +28,26 @@ public class SearchTest extends BaseTest {
         homepage = new HomePage(driver);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         open(driver, url);
-        homepage.signIn.click();
-        homepage.filledField(homepage.email, user.name);
-        homepage.filledField(homepage.pass, user.pass);
-        homepage.submitBtn.click();
-        WebDriverWait wait = new WebDriverWait(driver, 50);
+        homepage.clickSignInBtn();
+        homepage.filledEmail(user.name);
+        homepage.filledPwd(user.pass);
+        homepage.clickSubmit();
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOfElementLocated((By.xpath("//a[@class='logout']"))));
     }
 
     @Test
     public void logInTest() {
         AccountPage apage = new AccountPage(driver);
-        Assert.assertEquals(apage.editBtn.getText(), "Edit");
-        //Assert.assertEquals(homepage.signIn.getText(), "Account");
+        /*WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebElement a = wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("My Appointments")));*/
+        Assert.assertEquals(apage.myAppointments.getText(), "MY APPOINTMENTS");
     }
 
-    @Test
+   /* @Test
     public void editTest(){
         Assert.assertEquals(homepage.signIn.getText(), "Account");
-    }
+    }*/
 
     @AfterMethod
     public void afterMethod() {

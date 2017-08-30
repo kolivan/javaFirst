@@ -16,18 +16,24 @@ public class AccountPage {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
-    @FindBy(xpath = "//a[@class='/acount']")
+    @FindBy(linkText = "Dashboard")
     public WebElement dashboard;
 
-    @FindBy(xpath = "//a[@href='/account/information']")
+    @FindBy(linkText = "Account Information")
     public  WebElement accountInfo;
 
-    @FindBy(xpath = "//a[@href='/account/payment'")
+    @FindBy(linkText = "Payment Methods")
     public WebElement paymentMethod;
 
-    @FindBy(xpath = "//a[@href='/account/appointments'")
+    @FindBy(linkText = "My Appointments")
     public WebElement myAppointments;
 
-    @FindBy(xpath = "//a[@class='/link btn-turquoise ember-view'")
+    @FindBy(linkText = "Edit")
     public WebElement editBtn;
+
+    @FindBy(linkText = "Change Password")
+    public WebElement changePwd;
+
+    @FindBy(xpath = "//div[@class='note']")
+    public WebElement note;
 }
