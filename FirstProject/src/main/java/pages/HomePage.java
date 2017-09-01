@@ -1,20 +1,25 @@
 package pages;
 
 import helpers.User;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
 
 /**
  * Created by bigdrop on 8/22/2017.
  */
-public class HomePage {
+public class HomePage extends BasePage {
 
+
+    Wait waiter;
     public HomePage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+       super(driver);
     }
 
     public WebDriver driver;
@@ -39,19 +44,28 @@ public class HomePage {
 
     public HomePage filledEmail(String name){
         email.sendKeys(name);
-        return new HomePage(driver);
+        return this;
     }
     public HomePage filledPwd(String name){
         pass.sendKeys(name);
-        return new HomePage(driver);
+        return this;
     }
     public HomePage clickSignInBtn() {
         signIn.click();
-        return new HomePage(driver);
+        return this;
     }
-    public HomePage clickSubmit(){
+    public BasePage clickSubmit(){
         submitBtn.click();
-        return new HomePage(driver);
+        try {
+            waiter.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@class='logout']")));
+            return new AccountPage(driver);
+        }
+        catch (NoSuchElementException e) {
+            return new HomePage(driver);
+        }
+        catch (NullPointerException e) {
+            return new HomePage(driver);
+        }
     }
 
 

@@ -9,12 +9,11 @@ import sun.awt.windows.WEmbeddedFrame;
 /**
  * Created by bigdrop on 8/29/2017.
  */
-public class AccountPage {
+public class AccountPage extends BasePage{
     public WebDriver driver;
 
     public AccountPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+        super(driver);
     }
     @FindBy(linkText = "Dashboard")
     public WebElement dashboard;

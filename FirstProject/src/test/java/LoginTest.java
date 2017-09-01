@@ -20,55 +20,57 @@ import java.util.concurrent.TimeUnit;
  */
 public class LoginTest extends BaseTest {
 
-    public WebDriver driver;
-
     HomePage homepage;
     AccountPage accountPage;
     public String url = "https://hs.bigdropinc.net/";
     User existingUser = new User("anna.kolivanova@bigdropinc.com", "Tester123");
     User existingUserWithInvalidPwd = new User("anna.kolivanova@bigdropinc.com", "Tester1234");
     User nonExistingUser = new User("anna.kolivanova123@bigdropinc.com", "Tester123");
-    public  String incorrectEmailOrPwd="Incorrect email or password";
+    public String incorrectEmailOrPwd = "Incorrect email or password";
     public String emptyField = "This field can't be blank";
 
     @BeforeMethod
     public void beforeMethod() {
-        driver = new FirefoxDriver();
+
         homepage = new HomePage(driver);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        open(driver, url);
-
+        homepage.openPage(url);
     }
-
 
 
     @Test
     public void logInExistingUserTest() {
-        homepage.clickSignInBtn();
-        homepage.filledEmail(existingUser.name);
-        homepage.filledPwd(existingUser.pass);
+
+        homepage.clickSignInBtn()
+                .filledEmail(existingUser.name)
+                .filledPwd(existingUser.pass);
         homepage.clickSubmit();
         accountPage = new AccountPage(driver);
-        asseertThat(driver,accountPage.logout);
+        waitThat( accountPage.logout);
     }
+
     @Test
-    public void logInNotExistingUserTest(){
+    public void logInNotExistingUserTest() {
+
         homepage.clickSignInBtn();
         homepage.filledEmail(nonExistingUser.name);
         homepage.filledPwd(nonExistingUser.pass);
         homepage.clickSubmit();
         Assert.assertEquals(homepage.note.getText(), incorrectEmailOrPwd);
     }
+
     @Test
-    public void logInUserWithInvalidPassTest(){
+    public void logInUserWithInvalidPassTest() {
+
         homepage.clickSignInBtn();
         homepage.filledEmail(existingUserWithInvalidPwd.name);
         homepage.filledPwd(existingUserWithInvalidPwd.pass);
         homepage.clickSubmit();
         Assert.assertEquals(homepage.note.getText(), incorrectEmailOrPwd);
     }
+
     @Test
-    public  void LogInWithEmptyFields(){
+    public void LogInWithEmptyFields() {
+
         homepage.clickSignInBtn();
         homepage.clickSubmit();
         Assert.assertEquals(homepage.note.getText(), emptyField);
@@ -76,6 +78,7 @@ public class LoginTest extends BaseTest {
 
     @AfterMethod
     public void afterMethod() {
+
         driver.quit();
     }
 }
