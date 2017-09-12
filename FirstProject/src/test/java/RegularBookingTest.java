@@ -26,12 +26,6 @@ public class RegularBookingTest extends BaseTest {
 
     @Test
     public void openLocation() {
-        File file=new File("C:\\Users\\bigdrop.DESKTOP-9JVHO99\\IdeaProjects\\FirstProject\\src\\test\\location.csv");
-        Scanner testScanner = new Scanner(new BufferedReader(new FileReader(file)));
-
-        while (testScanner.hasNextLine())
-        {
-            System.out.println(testScanner.nextLine());
-        }
+      
     }
 }
