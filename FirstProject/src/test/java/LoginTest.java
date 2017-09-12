@@ -6,12 +6,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pages.AccountPage;
 import pages.HomePage;
 import pages.LocationPage;
+import helpers.DataProviderTest;
 
 import java.util.concurrent.TimeUnit;
 
@@ -76,7 +75,16 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(homepage.note.getText(), emptyField);
     }
 
-    @AfterMethod
+    @Test(dataProvider = "Authentication", dataProviderClass = DataProviderTest.class)
+    public void LogInWithDataProvider(String userName, String pwd, String expCondition){
+        homepage.clickSignInBtn();
+        homepage.filledEmail(userName);
+        homepage.filledPwd(pwd);
+        homepage.clickSubmit();
+        Assert.assertEquals(homepage.note.getText(), expCondition);
+    }
+
+    @AfterTest
     public void afterMethod() {
 
         driver.quit();

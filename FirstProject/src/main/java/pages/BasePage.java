@@ -18,4 +18,11 @@ public class BasePage {
     public void openPage (String URL) {
         driver.get(URL);
     }
+
+    public void click(WebElement element) {
+        element.click();
+    }
+
+
+
 }

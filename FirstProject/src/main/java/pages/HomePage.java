@@ -51,11 +51,11 @@ public class HomePage extends BasePage {
         return this;
     }
     public HomePage clickSignInBtn() {
-        signIn.click();
+        click(signIn);
         return this;
     }
     public BasePage clickSubmit(){
-        submitBtn.click();
+        click(submitBtn);
         try {
             waiter.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@class='logout']")));
             return new AccountPage(driver);
