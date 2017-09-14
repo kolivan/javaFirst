@@ -10,6 +10,7 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
+import helpers.ExcelUtils;
 
 /**
  * Created by bigdrop on 8/22/2017.
@@ -67,6 +68,16 @@ public class HomePage extends BasePage {
             return new HomePage(driver);
         }
     }
+
+        public void Execute() throws Exception{
+            //This is to get the values from Excel sheet, passing parameters (Row num &amp; Col num)to getCellData method
+            String sUserName = ExcelUtils.getCellData(1, 1);
+            String sPassword = ExcelUtils.getCellData(1, 2);
+            email.sendKeys(sUserName);
+            pass.sendKeys(sPassword);
+            signIn.click();
+
+        }
 
 
 }

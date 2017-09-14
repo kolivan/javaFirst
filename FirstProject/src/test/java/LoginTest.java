@@ -1,3 +1,4 @@
+import helpers.ExcelUtils;
 import helpers.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -82,6 +83,15 @@ public class LoginTest extends BaseTest {
         homepage.filledPwd(pwd);
         homepage.clickSubmit();
         Assert.assertEquals(homepage.note.getText(), expCondition);
+    }
+
+    public String path = "src/main/resources/location.csv";
+    ExcelUtils excelUtils = new ExcelUtils();
+    @Test
+    public void LogInWithFile() throws Exception{
+        excelUtils.setExcelFile(path,"Sheet1");
+        homepage.clickSignInBtn();
+        homepage.Execute();
     }
 
     @AfterTest
